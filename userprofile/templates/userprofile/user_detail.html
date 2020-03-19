@@ -18,8 +18,8 @@
     <script type="text/javascript">
         function map_init(map, options) {
             // get point lat and lon
-            var lon = "{{ user.profile.location.x }}";
-            var lat = "{{ user.profile.location.y }}";
+            var lon = "{{ user.profile.geom.x }}";
+            var lat = "{{ user.profile.geom.y }}";
 
             // zoom to point & add it to map
             map.setView([lat, lon], 12);

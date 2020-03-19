@@ -15,14 +15,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
 
+# for leaflet map
+from djgeojson.views import GeoJSONLayerView
+
+from django.contrib.auth.models import User
 from userprofile import views
+from userprofile.models import Profile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.UserList.as_view(), name='home'),
-    path('<username>/', views.UserDetail.as_view(), name='user-detail'),
-    path('<username>/edit', views.UserEdit.as_view(), name='user-edit'),
+    path('user/<username>/', views.UserDetail.as_view(), name='user-detail'),
+    path('user/<username>/edit', views.UserEdit.as_view(), name='user-edit'),
+    path('map/', views.map, name='map'),
+    # map
+    url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Profile, 
+                            properties=('user_list', 'phone', 'address')), name='data')
+
+
 
 
 ]

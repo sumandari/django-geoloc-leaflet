@@ -10,7 +10,7 @@
 
     <ul>
         <h4>user...</h4>
-        <li><a href="{% url 'user-detail' username=user.username %}">{{ user.username }}</a></li>
+        <li><a href={% if user.username %}"{% url 'user-detail' username=user.username %}"{% else %}"#"{% endif %}>{{ user.username }}</a></li>
     </ul>
     {% endfor %}
     {% endif %}

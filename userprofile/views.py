@@ -1,5 +1,6 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.template import loader
 
 from django.urls import reverse
 
@@ -16,12 +17,12 @@ from .forms import UserForm, ProfileForm
 class UserList(ListView):
     model = User
     context_object_name = 'users'
-    template_name = 'users/index.html'
+    template_name = 'userprofile/index.html'
 
 
 class UserDetail(DetailView):
     model = User
-    template_name = 'users/user_detail.html'
+    template_name = 'userprofile/user_detail.html'
 
     slug_field = 'username'
     slug_url_kwarg = 'username'
@@ -37,7 +38,7 @@ class UserEdit(UpdateView):
     form_class = UserForm
     second_form_class = ProfileForm
 
-    template_name = 'users/user_edit.html'
+    template_name = 'userprofile/user_edit.html'
 
     slug_field = 'username'
     slug_url_kwarg = 'username'
@@ -67,3 +68,10 @@ class UserEdit(UpdateView):
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.form_invalid(form, profile_form)
+
+
+def map(request):
+    template = loader.get_template('userprofile/user_map.html')
+    context = {
+    }
+    return HttpResponse(template.render(context, request))

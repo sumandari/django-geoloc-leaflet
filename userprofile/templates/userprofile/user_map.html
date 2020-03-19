@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load leaflet_tags %}
+<html>
+  <head>
+    {% leaflet_js %}
+    {% leaflet_css %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <style>
+        html, body, #container /*, and all other map parent selectors*/ {
+              height: 100%;
+              overflow: hidden;
+              width: 100%;
+        }
+
+        .leaflet-container { 
+            height: 100%; 
+        }
+
+    </style>
+  </head>
+  <body>
+    {% leaflet_map "main" callback="main_map_init" %}
+
+    <script type="text/javascript">
+        // latlon set view
+        let mylat = -6.21462;
+        let mylon = 106.84513;
+
+        function main_map_init (map, options) {
+            var dataurl = '{% url "data" %}';
+            map.setView([mylat, mylon], 5);
+            // Download GeoJSON via Ajax
+            $.getJSON(dataurl, function (data) {
+                // Add GeoJSON layer
+                console.log(data);
+                console.log(data.phone)
+                L.geoJson(data, {
+                    onEachFeature: function(feature, layer){
+                        layer.bindPopup(''+
+                            '<h3>' + feature.properties.user_list.username + '</h3>' +
+                            '<ul>' +
+                                '<li> phone: ' + feature.properties.phone + '</li>' +
+                                '<li> address: ' + feature.properties.address + '</li>' +
+                            '</ul>'
+                        );
+                    }
+                }).addTo(map);
+            });
+        }
+    </script>
+  </body>
+</html>

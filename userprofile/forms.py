@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms_gis.ModelForm):
     class Meta:
         model = Profile
-        fields = ('location', 'phone')
+        fields = ('geom', 'phone')
 
     location = forms_gis.PointField(widget=
         forms_gis.OSMWidget(attrs={'map_width': 800, 'map_height': 500})
