@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>User Edit</title>
+        {{ profile_form.media }}
+    </head>
+<body>
+    username -{{user.name}}
+  
+    <form method="post">
+  {% csrf_token %}
+{{ form.as_p }}
+{{ profile_form.as_p }}
+  <button type="submit">Save changes</button>
+</form>
+     
+</body>
+</html>

@@ -5,5 +5,5 @@ from .models import Profile
 
 @admin.register(Profile)
 class ProfileAdmin(OSMGeoAdmin):
-    list_display = ('location', )
+    list_display = ('location', 'phone',)
 

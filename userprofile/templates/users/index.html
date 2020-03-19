@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>User List</title>
+</head>
+<body>
+    {% if users %}
+    {% for user in users %}
+
+    <ul>
+        <h4>user...</h4>
+        <li><a href="{% url 'user-detail' username=user.username %}">{{ user.username }}</a></li>
+    </ul>
+    {% endfor %}
+    {% endif %}
+</body>
+</html>

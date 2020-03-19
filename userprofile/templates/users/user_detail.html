@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+{% load leaflet_tags %}
+<head>
+    <meta charset="utf-8">
+    <title>User Detail</title>
+</head>
+<body>
+    <ul>
+        <li>user: {{ user.username }}</li>
+        <li>phone: {{ user.profile.phone }}</li>
+        <li>{{ user.profile.location }}</li>
+    </ul>
+    
+</body>
+</html>

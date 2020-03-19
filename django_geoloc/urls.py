@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from userprofile import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.UserList.as_view(), name='home'),
+    path('<username>/', views.UserDetail.as_view(), name='user-detail'),
+    path('<username>/edit', views.UserEdit.as_view(), name='user-edit'),
+
+
 ]
