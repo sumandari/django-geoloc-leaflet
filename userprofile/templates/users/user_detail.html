@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8">
     <title>User Detail</title>
+    {% leaflet_js %}
+    {% leaflet_css %}
 </head>
 <body>
     <ul>
@@ -11,6 +13,19 @@
         <li>phone: {{ user.profile.phone }}</li>
         <li>{{ user.profile.location }}</li>
     </ul>
+    {% leaflet_map "main" callback="map_init" %}
+
+    <script type="text/javascript">
+        function map_init(map, options) {
+            // get point lat and lon
+            var lon = "{{ user.profile.location.x }}";
+            var lat = "{{ user.profile.location.y }}";
+
+            // zoom to point & add it to map
+            map.setView([lat, lon], 12);
+            L.marker([lat, lon]).addTo(map);
+        }
+    </script>
     
 </body>
 </html>
