@@ -1,0 +1,16 @@
+body {
+    background-color: #edbb99;
+    margin-top: 1rem;
+}
+
+ul {
+    margin: 0;
+}
+
+.username {
+    font-size: 3rem;
+    margin-bottom: 0px;
+}
+.leaflet-container {
+    width: 100%;
+}

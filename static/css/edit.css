@@ -1,0 +1,20 @@
+body {
+    padding-top: 3rem;
+    background-color:   #edbb99;
+}
+
+.container {
+    background-color: white;
+    padding: 2rem;
+    padding-top: 1rem;
+    min-width: 300px;
+    width: 860px;
+}
+
+.after-map {
+    clear:left;
+}
+
+.form-control {
+    width: 100%;
+}

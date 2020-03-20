@@ -1,19 +1,46 @@
-<!DOCTYPE html>
-<html>
+{% extends 'layouts/base.html' %}
+{% load static %}
 {% load leaflet_tags %}
-<head>
-    <meta charset="utf-8">
-    <title>User Detail</title>
+
+{% block head %}
+    {# Load the tag library #}
+    {% load bootstrap4 %}
+
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+    {# load django-leaflet #}
     {% leaflet_js %}
     {% leaflet_css %}
-</head>
-<body>
-    <ul>
-        <li>user: {{ user.username }}</li>
-        <li>phone: {{ user.profile.phone }}</li>
-        <li>{{ user.profile.location }}</li>
-    </ul>
-    {% leaflet_map "main" callback="map_init" %}
+
+   <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+{% endblock %}
+
+
+{% block content %}
+  <div class="container">
+    <div class="text-center ">
+      <span class="username">{{ user.first_name }} {{ user.last_name }}</span>
+      <ul class="list-inline">
+          <li class="list-inline-item"><strong>phone</strong>: {{ user.profile.phone }}</li>
+          <li class="list-inline-item"><strong>address</strong>: {{ user.profile.address }}</li>
+          <li class="list-inline-item"><strong>last seen</strong>: {% if user.last_login %}{{user.last_login}}{% else %}unknown{% endif %}</li>
+      </ul>
+    </div>
+    <div class="text-right mb-0 mt-0">
+      <ul class="list-inline">
+          <li class="list-inline-item"><a class="btn btn-link" href="{% url 'home'%}">List</a></li>
+          <li class="list-inline-item"><a class="btn btn-link" href="{% url 'map'%}">Map</a></li>
+          <li class="list-inline-item"><a class="btn btn-link" href="{% url 'user-edit' username=user.username%}">Edit</a></li>
+      </ul>
+    </div>
+    <div class="col mymap">
+      {% leaflet_map "main" callback="map_init" %}
+    </div>
+  </div>
+    
+    
 
     <script type="text/javascript">
         function map_init(map, options) {
@@ -26,6 +53,5 @@
             L.marker([lat, lon]).addTo(map);
         }
     </script>
-    
-</body>
-</html>
+
+{% endblock %}

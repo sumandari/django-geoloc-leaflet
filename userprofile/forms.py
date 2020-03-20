@@ -8,13 +8,13 @@ from .models import Profile
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('first_name', 'email')
+        fields = ('first_name', 'last_name')
 
 class ProfileForm(forms_gis.ModelForm):
     class Meta:
         model = Profile
-        fields = ('geom', 'phone')
+        fields = ('phone', 'address', 'geom')
 
-    location = forms_gis.PointField(widget=
+    geom = forms_gis.PointField(widget=
         forms_gis.OSMWidget(attrs={'map_width': 800, 'map_height': 500})
     )

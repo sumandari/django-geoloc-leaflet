@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map GeoDjango</title>
+    {# Load the tag library #}
+    {% load bootstrap4 %}
+
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+    {% block head%}{% endblock %}
+
+    <style type="text/css">
+        .logout{
+            padding-top: 0;
+            margin-top: -1rem;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div class="text-right logout">
+        <a href="/accounts/logout">Logout</a>
+    </div>
+    {% endif %}
+    {% block content%}{% endblock %}
+</body>
+</html>

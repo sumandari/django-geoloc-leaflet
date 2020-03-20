@@ -1,0 +1,17 @@
+body {
+    padding-top: 3rem;
+    background-color:   #edbb99;
+}
+
+.container {
+    background-color: white;
+    padding: 2rem;
+    width: 400px;
+}
+
+form {
+    margin-top: 1.5rem;
+}
+.form-control {
+    width: 350px;
+}

@@ -14,17 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls import url
 
 # for leaflet map
 from djgeojson.views import GeoJSONLayerView
+
+# serving static during development
+from django.conf import settings
+from django.conf.urls.static import static
 
 from django.contrib.auth.models import User
 from userprofile import views
 from userprofile.models import Profile
 
 urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('', views.UserList.as_view(), name='home'),
     path('user/<username>/', views.UserDetail.as_view(), name='user-detail'),
@@ -33,8 +38,4 @@ urlpatterns = [
     # map
     url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Profile, 
                             properties=('user_list', 'phone', 'address')), name='data')
-
-
-
-
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

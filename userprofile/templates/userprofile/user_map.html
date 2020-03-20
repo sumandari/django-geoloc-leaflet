@@ -2,6 +2,13 @@
 {% load leaflet_tags %}
 <html>
   <head>
+     {# Load the tag library #}
+    {% load bootstrap4 %}
+
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    
     {% leaflet_js %}
     {% leaflet_css %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>

@@ -8,19 +8,21 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.contrib.auth.models import User
 from .models import Profile
 
 from .forms import UserForm, ProfileForm
 
 
-class UserList(ListView):
+class UserList(LoginRequiredMixin, ListView):
     model = User
     context_object_name = 'users'
     template_name = 'userprofile/index.html'
 
 
-class UserDetail(DetailView):
+class UserDetail(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'userprofile/user_detail.html'
 
@@ -28,7 +30,7 @@ class UserDetail(DetailView):
     slug_url_kwarg = 'username'
 
 
-class UserEdit(UpdateView):
+class UserEdit(LoginRequiredMixin, UpdateView):
     """
     Menampilkan models user dan profile form dalam satu page - edit user
     """
@@ -57,7 +59,7 @@ class UserEdit(UpdateView):
         return reverse('user-detail', kwargs={'username': self.kwargs.get('username')})
 
     def post(self, request, *args, **kwargs):
-        # self.object = self.get_object()
+        self.object = self.get_object()
         instance_user = User.objects.get(username=self.kwargs.get('username'))
         instance_profile = Profile.objects.get(user=instance_user)
         form = self.form_class(request.POST, instance=instance_user)
@@ -67,7 +69,7 @@ class UserEdit(UpdateView):
             profile_form.save()
             return HttpResponseRedirect(self.get_success_url())
         else:
-            return self.form_invalid(form, profile_form)
+            return self.form_invalid(self)
 
 
 def map(request):
