@@ -10,12 +10,12 @@ or using docker image -> kartoza postgis https://hub.docker.com/r/kartoza/postgi
 
 ---
 create database postgis and create extension postgis
-# CREATE DATABASE djangogis;
-# CREATE EXTENSION postgis;
+- # CREATE DATABASE djangogis;
+- # CREATE EXTENSION postgis;
 
 create user and password
-# \c djangogis
-# CREATE USER admingis WITH PASSWORD 'qwerty123456'
+- # \c djangogis
+- # CREATE USER admingis WITH PASSWORD 'qwerty123456'
 
 ---
 create venv
