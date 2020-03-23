@@ -9,13 +9,16 @@ installation on macOS
 or using docker image -> kartoza postgis https://hub.docker.com/r/kartoza/postgis/ 
 
 ---
+go to psql CLI:
+- psql
+
 create database postgis and create extension postgis
-- # CREATE DATABASE djangogis;
-- # CREATE EXTENSION postgis;
+- CREATE DATABASE djangogis;
+- CREATE EXTENSION postgis;
 
 create user and password
-- # \c djangogis
-- # CREATE USER admingis WITH PASSWORD 'qwerty123456'
+- \c djangogis
+- CREATE USER admingis WITH PASSWORD 'qwerty123456'
 
 ---
 create venv
