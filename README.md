@@ -30,10 +30,17 @@ activate venv
 install module
 - pip install -r requirements.txt
 
+migration db
+- python manage.py makemigrations
+- python manage.py migrate
+
+create superuser
+- python manage.py createsuperuser
+
 run django
 - python manage.py runserver
 
 ----
-<a href="https://www.youtube.com/watch?v=zytRMB_S1tg
-" target="_blank"><img src="http://img.youtube.com/vi/zytRMB_S1tg/0.jpg" 
+<a href="https://www.youtube.com/watch?v=XDxX80O2b5Q
+" target="_blank"><img src="http://img.youtube.com/vi/XDxX80O2b5Q/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
