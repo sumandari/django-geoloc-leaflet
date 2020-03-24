@@ -23,7 +23,7 @@
         </tr>
       </thead>
       <tbody>
-          {% if users %}
+         
           {% for user in users %}
           <tr>
             <td><a href="{% url 'user-detail' username=user.username %}">{{ user.first_name }} {{ user.last_name }}</a></td>
@@ -31,7 +31,7 @@
             <td>{{ user.profile.address }}</td>
           </tr>
           {% endfor %}
-          {% endif %}              
+                       
       </tbody>
     </table>
   </div>
