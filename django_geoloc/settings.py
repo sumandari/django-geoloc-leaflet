@@ -84,9 +84,18 @@ DATABASES = {
         'USER': 'admingis',
         'PASSWORD': 'qwerty123456',
         'HOST': 'localhost',
-        'PORT': '5432'
+        'PORT': '5432',
+
+        # testing database
+        'other': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': 'other',
+            'USER': 'admingis',
+        },
     }
 }
+
+SECRET_KEY = 'django_tests_secret_key'
 
 
 # Password validation

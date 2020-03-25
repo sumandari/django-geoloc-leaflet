@@ -33,7 +33,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.UserList.as_view(), name='home'),
     path('user/<username>/', views.UserDetail.as_view(), name='user-detail'),
-    path('user/<username>/edit', views.UserEdit.as_view(), name='user-edit'),
+    path('user/<username>/edit/', views.UserEdit.as_view(), name='user-edit'),
     path('map/', views.map, name='map'),
     # map
     url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Profile, 

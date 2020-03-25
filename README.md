@@ -13,12 +13,12 @@ go to psql CLI:
 - psql
 
 create database postgis and create extension postgis
-- CREATE DATABASE djangogis;
-- CREATE EXTENSION postgis;
+- postgres# CREATE DATABASE djangogis;
+- postgres# CREATE EXTENSION postgis;
 
 create user and password
-- \c djangogis
-- CREATE USER admingis WITH PASSWORD 'qwerty123456'
+- postgres# \c djangogis
+- postgres# CREATE USER admingis WITH PASSWORD 'qwerty123456'
 
 ---
 create venv
@@ -39,6 +39,15 @@ create superuser
 
 run django
 - python manage.py runserver
+
+---
+run test
+
+Create database superuser, alter the user’s role from the SQL shell
+- postgres# ALTER ROLE admingis SUPERUSER
+
+run test in terminal
+- python manage.py test
 
 ----
 <a href="https://www.youtube.com/watch?v=XDxX80O2b5Q
