@@ -24,7 +24,7 @@ from djgeojson.views import GeoJSONLayerView
 from django.conf import settings
 from django.conf.urls.static import static
 
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from userprofile import views
 from userprofile.models import Profile
 
@@ -36,6 +36,6 @@ urlpatterns = [
     path('user/<username>/edit/', views.UserEdit.as_view(), name='user-edit'),
     path('map/', views.map, name='map'),
     # map
-    url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Profile, 
+    url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Profile,
                             properties=('user_list', 'phone', 'address')), name='data')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
