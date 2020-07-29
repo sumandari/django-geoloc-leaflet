@@ -36,7 +36,7 @@ class UserEdit(LoginRequiredMixin, UpdateView):
     """
     model = User
     second_model = Profile
-    
+
     form_class = UserForm
     second_form_class = ProfileForm
 

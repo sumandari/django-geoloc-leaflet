@@ -14,5 +14,5 @@ class Profile(gis_models.Model):
 
     @property
     def user_list(self):
-        context = {'username': self.user.username,}
+        context = {'username': self.user.username}
         return context

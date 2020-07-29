@@ -13,7 +13,7 @@ services:
     depends_on:
       - db
   db:
-    image: mdillon/postgis
+    image: kartoza/postgis
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:

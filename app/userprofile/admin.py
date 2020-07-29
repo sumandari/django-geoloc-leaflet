@@ -28,11 +28,11 @@ class UserAdmin(OSMGeoAdmin, admin.ModelAdmin):
     ordering = ('first_name',)
 
     fields = ('username', 'first_name', 'last_name', 'last_login', 'email')
-    
-    # set True, will call select_related('user', 'profile'), 
+
+    # set True, will call select_related('user', 'profile'),
     # query with fk presented
     list_select_related = True
-    
+
     inlines = [
         UserProfileInline,
     ]

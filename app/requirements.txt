@@ -13,5 +13,9 @@ sqlparse==0.3.1
 # add dj-database-url to generate proper db config
 dj-database-url==0.5.0
 
+
+# add gunicorn 
+gunicorn==20.0.4
+
 # add whitenoise
 whitenoise==5.1.0

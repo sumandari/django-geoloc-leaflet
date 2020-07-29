@@ -20,6 +20,7 @@ class UserProfilePageTest(TestCase):
 
     test_* will be run
     """
+
     def setUp(self):
         # create super user
         self.user = User.objects.create_superuser(
@@ -32,12 +33,12 @@ class UserProfilePageTest(TestCase):
         # before login
         response = self.client.get('/')
         self.assertEqual(response.status_code, 302)
-        
+
         # after login
         self.client.force_login(user=self.user)
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
-        assert  b'Logout' in response.content
+        assert b'Logout' in response.content
 
         # after logout
         self.client.logout()
@@ -46,16 +47,16 @@ class UserProfilePageTest(TestCase):
 
     def test_user_detail_page(self):
         self.client.force_login(user=self.user)
-        response = self.client.get('/user/'+self.user.username +'/')
+        response = self.client.get('/user/' + self.user.username + '/')
         self.assertEqual(response.status_code, 200)
-        
+
         # check leaflet exist
         assert b'leaflet-container' in response.content
 
     def test_map_page(self):
         response = self.client.get('/map/')
         self.assertEqual(response.status_code, 200)
-        
+
         # check leaflet exist
         assert b'leaflet-container' in response.content
 
@@ -107,11 +108,11 @@ class TestAdminPage(TestCase):
             password=self.password_admin)
 
         user = auth.get_user(client)
-        assert user.is_authenticated == True
+        self.assertTrue(user.is_authenticated)
 
         admin_pages = [
             "/admin/",
-             "/admin/auth/",
+            "/admin/auth/",
             "/admin/auth/group/",
             "/admin/auth/group/add/",
             "/admin/auth/user/",
@@ -148,7 +149,7 @@ class TestAdminPage(TestCase):
         self.create_user()
         client = Client()
         client.force_login(user=self.user)
-        
+
         user = auth.get_user(client)
         self.assertEqual(user.is_authenticated, True)
 
