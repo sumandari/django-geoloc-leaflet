@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./app
+    command: python manage.py runserver 0.0.0.0:8001
+    volumes:
+      - ./app/:/usr/src/app/
+    ports:
+      - 8001:8001
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+  db:
+    image: mdillon/postgis
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=django_geoloc
+      - POSTGRES_PASSWORD=django_geoloc
+      - POSTGRES_DB=django_geoloc_dev
+
+
+volumes:
+  postgres_data:

@@ -15,13 +15,15 @@ RUN apk update \
 
 COPY ./requirements.txt .
 RUN pip install --upgrade pip \
-    && pip install -r requirements.txt\
+    && pip install -r requirements.txt \
     && pip install gunicorn
-
+  
 COPY . .
-RUN chmod +x entrypoint.sh 
 
 # collect static files
-RUN python manage.py collectstatic --noinput
+# RUN python manage.py collectstatic --noinput
 
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+RUN ["chmod", "+x", "entrypoint.sh"]
+# RUN ["chmod", "+x", "wait-for-postgres.sh"]
+ENTRYPOINT ["sh","entrypoint.sh"]
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

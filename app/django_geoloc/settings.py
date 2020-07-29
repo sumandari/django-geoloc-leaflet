@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+import dj_database_url
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,12 +22,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'u&omugnz9$5gq41-*l2%^!3p(2w30*)#v@a#vroq$vel3tb8=u'
+SECRET_KEY = os.environ.get('SECRET_KEY', default='foo')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', default=0))
 
-ALLOWED_HOSTS = []
+# 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
+# For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -78,27 +83,36 @@ WSGI_APPLICATION = 'django_geoloc.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'djangogis',
-        'USER': 'admingis',
-        'PASSWORD': 'qwerty123456',
+        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        # 'NAME': 'djangogis',
+        # 'USER': 'admingis',
+        # 'PASSWORD': 'qwerty123456',
         # 'HOST': 'localhost',
-        'HOST': 'host.docker.internal',
-        'PORT': '5432',
+        # #'HOST': 'host.docker.internal',
+        # 'PORT': '5432',
+
+        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': os.environ.get('SQL_USER', 'user'),
+        'PASSWORD': os.environ.get('SQL_PASSWORD', 'password'),
+        'HOST': os.environ.get('SQL_HOST','localhost'),
+        'PORT': os.environ.get('SQL_PORT','5432'),
 
         # testing database
-        'other': {
-            'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': 'other',
-            'USER': 'admingis',
-        },
+        # 'other': {
+        #     'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        #     'NAME': 'other',
+        #     'USER': 'admingis',
+        # },
     }
 }
 
-SECRET_KEY = 'django_tests_secret_key'
+# DATABASE_URL = os.environ.get('DATABASE_URL')
+# config db
+# db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+# DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -139,12 +153,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    # '/var/www/static/',
-    # '/static'
+    os.path.join(BASE_DIR, "static")
 ]
 
-# add whitenoise settings
+# add whitenoise settings (django doesn't serve staticfiles in production)
+# that's why we need whitenoise to collect static
+# run $ python manage.py collectstatic
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
