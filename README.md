@@ -1,53 +1,52 @@
-Django Geolocation using POSTGIS
+# Django-Geoloc with docker-compose
+
+## Requirement
+- Docker
+
+if you want to running with your native system (without docker), checkout git to commit sha
+
+```
+$ git checkout 706ee03
+```
 
 ---
-installation on macOS
-- brew install psql
-- brew install gdal
-- brew install libgeoip
+#### Build containers with docker-compose build
+```
+$ docker-compose -f docker-compose.prod.yml build
+```
 
-or using docker image -> kartoza postgis https://hub.docker.com/r/kartoza/postgis/ 
+##### Run the containers with dicker-compose up
+```
+$ docker-compose -f docker-compose.prod.yml up -d
+```
 
----
-go to psql CLI:
-- psql
+#### migrate model to database from running web container
+```
+$ docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+```
 
-create database postgis and create extension postgis
-- postgres# CREATE DATABASE djangogis;
-- postgres# CREATE EXTENSION postgis;
+#### collect staticfiles from running web container
+```
+$ docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput
+```
 
-create user and password
-- postgres# \c djangogis
-- postgres# CREATE USER admingis WITH PASSWORD 'qwerty123456'
+#### collect staticfiles from running web container
+```
+$ docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput
+```
 
----
-create venv
-- python3 -m venv venv
+#### create superuser to access admin page
+```
+$ docker-compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
+```
 
-activate venv
-- venv/bin/activate
+test your web, open [http://localhost:1337](http://localhost:1337) in your web browser
 
-install module
-- pip install -r requirements.txt
+if your web doesn't work (OMG!), check the log from container
 
-migration db
-- python manage.py makemigrations
-- python manage.py migrate
-
-create superuser
-- python manage.py createsuperuser
-
-run django
-- python manage.py runserver
-
----
-run test
-
-Create database superuser, alter the user’s role from the SQL shell
-- postgres# ALTER ROLE admingis SUPERUSER
-
-run test in terminal
-- python manage.py test
+```
+$ docker-compose -f docker-compose.prod.yml logs
+```
 
 ----
 <a href="https://www.youtube.com/watch?v=XDxX80O2b5Q
