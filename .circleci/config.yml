@@ -6,7 +6,14 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: docker-compose -f docker-compose.prod.yml up -d --build
-      - run: docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
-      - run: docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
-      - run: docker-compose -f docker-compose.prod.yml exec web python manage.py test
+      - run:
+          name: build and spin up
+          command: docker-compose -f docker-compose.prod.yml up -d --build
+      - run: 
+          name: migrate and collectstatic
+          command: |
+            docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+            docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
+      - run:
+          name: test web
+          command: docker-compose -f docker-compose.prod.yml exec web python manage.py test
