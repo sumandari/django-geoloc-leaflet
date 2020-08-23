@@ -1,4 +1,4 @@
-version: 3
+version: "3.0"
 jobs:
   build:
     # Use a Linux VM insted of docker environtment
