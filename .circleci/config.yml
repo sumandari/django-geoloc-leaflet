@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    # Use a Linux VM insted of docker environtment
+    machine: true
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: docker-compose -f docker-compose.prod.yml up -d --build
+      - run: docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+      - run: docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
+      - run: docker-compose -f docker-compose.prod.yml exec web python manage.py test
