@@ -4,14 +4,14 @@
 - Git
 - Docker
 
-## Stacks
+## Tech
 - docker compose
 - python3
-      - django
-      - django-bootstrap
-      - django-geojson
-      - django-leaflet
-      - gunicorn
+    - django
+    - django-bootstrap
+    - django-geojson
+    - django-leaflet
+    - gunicorn
 - nginx
 - postGIS
 
