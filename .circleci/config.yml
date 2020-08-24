@@ -1,19 +1,25 @@
 version: 2
 jobs:
   build:
-    # Use a Linux VM insted of docker environtment
-    machine: true
     working_directory: ~/repo
+    docker:
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
+      - setup_remote_docker  # in order to activate the Remote Docker Environment
+      - run: 
+          name: Install Docker Compose 
+          command: set -x curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose chmod +x ~/docker-compose
       - run:
           name: build and spin up
-          command: docker-compose -f docker-compose.prod.yml up -d --build
+          command: |
+            sh ~/docker-compose -f docker-compose.prod.yml build
+            sh ~/docker-compose -f docker-compose.prod.yml up -d 
       - run: 
           name: migrate and collectstatic
           command: |
-            docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
-            docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
+            sh ~/docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+            sh ~/docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
       - run:
           name: test web
-          command: docker-compose -f docker-compose.prod.yml exec web python manage.py test
+          command: sh ~/docker-compose -f docker-compose.prod.yml exec web python manage.py test
