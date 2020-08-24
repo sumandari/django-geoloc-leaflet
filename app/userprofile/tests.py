@@ -155,3 +155,8 @@ class TestAdminPage(TestCase):
 
         response = client.get('/admin/')
         assert response.status_code != 200
+
+
+class TestAlwaysFail(TestCase):
+    def test_always_fail(self):
+        assert False
