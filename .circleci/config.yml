@@ -22,4 +22,6 @@ jobs:
             sh ~/docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
       - run:
           name: test web
-          command: sh ~/docker-compose -f docker-compose.prod.yml exec web python manage.py test
+          command: |
+            set -e
+            sh ~/docker-compose -f docker-compose.prod.yml exec web python manage.py test
