@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: build and spin up
-          command: docker-compose -f docker-compose.prod.yml up -d --build
+          command: docker-compose -f docker-compose.prod.yml up -d
       - run: 
           name: migrate and collectstatic
           command: |
