@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: docker:19.03.12-ce-git
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
       - setup_remote_docker  # in order to activate the Remote Docker Environment
