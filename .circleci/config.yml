@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: docker:19.03.12-ce-git
     steps:
       - checkout
       - setup_remote_docker  # in order to activate the Remote Docker Environment
@@ -11,11 +11,12 @@ jobs:
           name: Install Docker Compose 
           command: |
             apk add --no-cache py-pip=9.0.0-r1
-            pip install docker-compose==1.15.0
+            pip install docker-compose==1.26.2
       - run:
           name: build and spin up
           command: |
-            docker-compose up
+            docker-compose -f docker-compose.prod.yml build
+            docker-compose -f docker-compose.prod.yml up -d 
       - run: 
           name: migrate and collectstatic
           command: |
