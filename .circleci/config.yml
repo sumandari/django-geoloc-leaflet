@@ -18,8 +18,8 @@ jobs:
       - run: 
           name: migrate and collectstatic
           command: |
-            docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
-            docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
+            sh ~/docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+            sh ~/docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
       - run:
           name: test web
-          command: docker-compose -f docker-compose.prod.yml exec web python manage.py test
+          command: sh ~/docker-compose -f docker-compose.prod.yml exec web python manage.py test
