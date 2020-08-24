@@ -2,26 +2,7 @@ version: 2
 jobs:
   build:
     working_directory: ~/repo
-    docker:
-      - image: docker:17.05.0-ce-git
+    machine: true
     steps:
       - checkout
-      - setup_remote_docker  # in order to activate the Remote Docker Environment
-      - run: 
-          name: Install Docker Compose 
-          command: |
-            apk add --no-cache py-pip=9.0.0-r1
-            pip install docker-compose==1.26.2
-      - run:
-          name: build and spin up
-          command: |
-            docker-compose -f docker-compose.prod.yml build
-            docker-compose -f docker-compose.prod.yml up -d 
-      - run: 
-          name: migrate and collectstatic
-          command: |
-            docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
-            docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
-      - run:
-          name: test web
-          command: docker-compose -f docker-compose.prod.yml exec web python manage.py test
+      - run: docker-compose up -d
